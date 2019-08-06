@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DatabaseExample</string>
+    <string name="add_data">Add Data</string>
+    <string name="delete">Delete</string>
+    <string name="register_data">Register Data</string>
+    <string name="et_name">Name</string>
+    <string name="et_email_id">Email ID</string>
+    <string name="et_phone_no">Phone No</string>
+    <string name="update_data">Update Data</string>
+    <string name="btn_update_data">Update Data</string>
+</resources>
