@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
+    android:backgroundTint="#fff59d"
     android:elevation="4dp">
 
     <LinearLayout
@@ -49,6 +50,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:backgroundTint="#f57f17"
+            android:textColor="#fff"
             android:layout_weight=".3"
             android:layout_gravity="center_vertical"
             android:text="@string/delete" />
