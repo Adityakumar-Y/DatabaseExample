@@ -14,17 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.databaseexample.Activities.MainActivity;
-import com.example.databaseexample.Contract.StudentContract;
+import com.example.databaseexample.Contract.StudentContract.StudentEntry;
 import com.example.databaseexample.Database.StudentDBHelper;
 import com.example.databaseexample.R;
-import com.example.databaseexample.Models.Student;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.example.databaseexample.Contract.StudentContract.*;
 
 public class AddFragment extends Fragment implements View.OnClickListener {
 
     private View view;
+    private StudentDBHelper dbHelper;
     private FloatingActionButton fab;
     private TextInputLayout etName, etEmail, etPhone;
     private Button btnAdd;
@@ -50,7 +49,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     private void init(View view) {
 
-        StudentDBHelper dbHelper = new StudentDBHelper(getContext());
+        dbHelper = new StudentDBHelper(getContext());
         mDatabase = dbHelper.getWritableDatabase();
 
         etName = view.findViewById(R.id.etNameLayout);
@@ -86,8 +85,9 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     @SuppressLint("RestrictedApi")
     @Override
     public void onPause() {
-        super.onPause();
+        dbHelper.close();
         fab.setVisibility(View.VISIBLE);
+        super.onPause();
     }
 
 

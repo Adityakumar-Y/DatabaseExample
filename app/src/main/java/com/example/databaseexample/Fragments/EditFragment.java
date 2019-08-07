@@ -36,6 +36,7 @@ public class EditFragment extends Fragment implements View.OnClickListener {
     private SQLiteDatabase mDatabase;
     private Cursor cursor;
     private String name, email, phone;
+    private StudentDBHelper dbHelper;
 
     @Nullable
     @Override
@@ -65,7 +66,7 @@ public class EditFragment extends Fragment implements View.OnClickListener {
 
     private void init(View v) {
 
-        StudentDBHelper dbHelper = new StudentDBHelper(getContext());
+        dbHelper = new StudentDBHelper(getContext());
         mDatabase = dbHelper.getWritableDatabase();
 
         fab = getActivity().findViewById(R.id.fab);
@@ -117,7 +118,8 @@ public class EditFragment extends Fragment implements View.OnClickListener {
     @SuppressLint("RestrictedApi")
     @Override
     public void onPause() {
-        super.onPause();
+        dbHelper.close();
         fab.setVisibility(View.VISIBLE);
+        super.onPause();
     }
 }

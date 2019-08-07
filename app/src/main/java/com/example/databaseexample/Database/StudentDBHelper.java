@@ -18,6 +18,7 @@ public class StudentDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
         final String SQL_CREATE_TABLE = "CREATE TABLE "+
                 StudentEntry.TABLE_NAME + " (" +
                 StudentEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+

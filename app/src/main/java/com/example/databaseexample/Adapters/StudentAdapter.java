@@ -28,8 +28,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     protected OnItemClickListener mListener;
 
     public interface OnItemClickListener{
-        void OnItemClick(int position, long id);
-        void OnDelete(long id);
+        void OnItemClick(int position);
+        void OnDelete(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -59,12 +59,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         String studName = cursor.getString(cursor.getColumnIndex(StudentEntry.COLUMN_NAME));
         String studEmail = cursor.getString(cursor.getColumnIndex(StudentEntry.COLUMN_EMAIL));
         String studPhone = cursor.getString(cursor.getColumnIndex(StudentEntry.COLUMN_PHONE));
-        id = cursor.getLong(cursor.getColumnIndex(StudentEntry._ID));
 
         holder.tvName.setText(studName);
         holder.tvEmail.setText(studEmail);
         holder.tvPhone.setText(studPhone);
-        holder.itemView.setTag(id);
     }
 
     @Override
@@ -93,7 +91,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                     if(mListener != null){
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
-                            mListener.OnItemClick(position, id);
+                            mListener.OnItemClick(position);
                         }
                     }
                 }
@@ -107,7 +105,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                     if(mListener != null){
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
-                            mListener.OnDelete((long) itemView.getTag());
+                            mListener.OnDelete(position);
                         }
                     }
                 }

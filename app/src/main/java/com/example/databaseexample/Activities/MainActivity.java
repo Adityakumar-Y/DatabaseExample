@@ -1,9 +1,12 @@
 package com.example.databaseexample.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void OnItemClick(int position, long id) {
+    public void OnItemClick(int position) {
 
         Log.d("MainActivity", "OnClick");
         EditFragment editFragment = new EditFragment();
@@ -92,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Bundle bundle = new Bundle();
         bundle.putInt("position",position);
-        bundle.putLong("id", id);
         editFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
@@ -102,8 +104,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void OnDelete(long id) {
+    public void OnDelete(final int position) {
         //studentList.remove(studentList.get(position));
+
+        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog))
+                .setTitle("Delete Record !!")
+                .setMessage("Are you sure to delete ?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteRecord(position);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+    }
+
+    private void deleteRecord(int position) {
+        Cursor cursor = getAllItems();
+        cursor.moveToPosition(position);
+        long id = cursor.getLong(cursor.getColumnIndex(StudentContract.StudentEntry._ID));
+
         Log.d("Main", id+"");
         mDatabase = dbHelper.getWritableDatabase();
         mDatabase.delete(StudentContract.StudentEntry.TABLE_NAME,
@@ -112,4 +133,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         );
         mAdapter.swapCursor(getAllItems());
     }
+
+
+    @Override
+    protected void onDestroy() {
+        dbHelper.close();
+        super.onDestroy();
+    }
 }
+
+
+
